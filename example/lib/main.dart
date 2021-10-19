@@ -16,20 +16,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final int targetTime = 60;
-  int _leftTime = 60;
+  final int targetTime = 6000;
+  int _leftTime = 0;
 
   @override
   void initState() {
     Timer(
         assignTime: targetTime,
+        tickTime: 1000,
         onTickTimer: (int leftTime) {
           if (!mounted) return;
           setState(() {
             _leftTime = leftTime;
           });
         },
-        onEndTimer: () {}).startTimer();
+        onEndTimer: () {
+          debugPrint('End timer');
+        }).startTimer();
     super.initState();
   }
 
@@ -41,7 +44,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('$_leftTime'),
+          child: Text((_leftTime ~/ 1000).toString()),
         ),
       ),
     );
